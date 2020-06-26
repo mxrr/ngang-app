@@ -1,12 +1,16 @@
 <template>
   <div>
-    <h1>Kuvalanka</h1>
+    <itemlist parentSite="kuvalanka"></itemlist>
   </div>
 </template>
 
 <script>
+import itemlist from './itemlist'
 export default {
-  name: 'kuvalanka'
+  name: 'kuvalanka',
+  components: {
+    'itemlist': itemlist
+  }
 }
 </script>
 <style>

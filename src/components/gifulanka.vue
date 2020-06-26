@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1>Gifulanka</h1>
+    <itemlist parentSite="gifulanka"></itemlist>
   </div>
 </template>
 
 <script>
+import itemlist from './itemlist'
 export default {
-  name: 'gifulanka'
+  name: 'gifulanka',
+  components: {
+    'itemlist': itemlist
+  }
 }
 </script>

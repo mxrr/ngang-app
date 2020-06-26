@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h1>MP3-lanka</h1>
+    <itemlist parentSite="mp3"></itemlist>
   </div>
 </template>
 
 <script>
+import itemlist from './itemlist'
 export default {
-  name: 'mp3'
+  name: 'mp3',
+  components: {
+    'itemlist': itemlist
+  }
 }
 </script>
-<style>
+<style scoped>
 
 </style>

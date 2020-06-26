@@ -1,0 +1,74 @@
+{
+    "mp4": 
+    {
+        "1": {
+            "file": "./asd",
+            "desc": "nee"
+        },
+        "2": {
+            "file": "./asd",
+            "desc": "ke"
+        },
+        "3": {
+            "file": "./asd",
+            "desc": "ri"
+        },
+        "4": {
+            "file": "./asd",
+            "desc": "nee"
+        },
+        "5": {
+            "file": "./asd",
+            "desc": "ke"
+        },
+        "6": {
+            "file": "./asd",
+            "desc": "ri"
+        }
+    },
+    "mp3":
+    {
+        "1": {
+            "file": "./asd",
+            "desc": "nee"
+        },
+        "2": {
+            "file": "./asd",
+            "desc": "ke"
+        },
+        "3": {
+            "file": "./asd",
+            "desc": "ri"
+        }
+    },
+    "images":
+    {
+        "1": {
+            "file": "./asd",
+            "desc": "nee"
+        },
+        "2": {
+            "file": "./asd",
+            "desc": "ke"
+        },
+        "3": {
+            "file": "./asd",
+            "desc": "ri"
+        }
+    },
+    "gif":
+    {
+        "1": {
+            "file": "./asd",
+            "desc": "nee"
+        },
+        "2": {
+            "file": "./asd",
+            "desc": "ke"
+        },
+        "3": {
+            "file": "./asd",
+            "desc": "ri"
+        }
+    }
+}
