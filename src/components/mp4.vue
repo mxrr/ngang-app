@@ -1,45 +1,15 @@
 <template>
   <div class="mp4">
-    <div class="videolist">
-      <a class="videos" v-for="item in items" :key="item.message">
-        {{ item.message }}
-      </a>
-    </div>
+    <itemlist></itemlist>
   </div>
 </template>
 
 <script>
+import itemlist from './itemlist'
 export default {
   name: 'mp4',
-  data: () => {
-    return {
-      items: [
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'},
-        {message: 'nee'},
-        {message: 'ke'},
-        {message: 'ri'}
-      ]
-    }
+  components: {
+    'itemlist': itemlist
   }
 }
 </script>

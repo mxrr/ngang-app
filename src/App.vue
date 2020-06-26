@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1 class="title">NGANG MEEMUPANKKI</h1>
+    <router-link class="home" v-bind:to="'/'">
+      <h1 class="title">NGANG MEEMUPANKKI</h1>
+    </router-link>
     <Navigation id="nav"></Navigation>
     <router-view/>
   </div>
@@ -21,17 +23,29 @@ export default {
 * {
   margin: 0;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(12, 6, 27);
+}
+::-webkit-scrollbar-thumb {
+  background: black;
+}
 .title {
   color: antiquewhite;
   background-color: rgba(0, 0, 0, 0.5);
   padding-top: 10px;
+}
+.title, a {
+  text-decoration: none;
 }
 #app {
   font-family: 'Raleway', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
 }
 body {
   background-color:rgb(12, 6, 27);

@@ -5,6 +5,7 @@ import mp4 from '@/components/mp4'
 import mp3 from '@/components/mp3'
 import kuvalanka from '@/components/kuvalanka'
 import Gifulanka from '@/components/gifulanka'
+import itemlist from '@/components/itemlist'
 
 Vue.use(Router)
 
@@ -27,8 +28,13 @@ export default new Router({
     },
     {
       path: '/gifulanka',
-      name: 'Gifuanka',
+      name: 'Gifulanka',
       component: Gifulanka
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: itemlist
     }
   ]
 })
