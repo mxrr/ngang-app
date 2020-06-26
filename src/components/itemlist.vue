@@ -1,29 +1,32 @@
 <template>
     <div class="list">
-
-        <div class="mp4-list" v-if="this.parentSite === 'mp4'">
-        <a class="items" v-for="video in mp4" :key="video.desc">
-            {{ video.desc }}
-        </a>
+      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" v-if="this.parentSite === undefined">
+        <div v-masonry-tile class="item" v-for="item in loadAll(mp4, mp3, images, gif)" :key="item">
+          <img :src="item.file">
         </div>
+      </div>
 
-        <div class="mp3-list" v-if="this.parentSite === 'mp3'">
-        <a class="items" v-for="audio in mp3" :key="audio.desc">
-            {{ audio.desc }}
-        </a>
+      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" v-if="this.parentSite === 'mp4'">
+        <div v-masonry-tile class="item" v-for="item in mp4" :key="item">
+          <img :src="item.file">
         </div>
+      </div>
 
-        <div class="image-list" v-if="this.parentSite === 'kuvalanka'">
-        <a class="items" v-for="image in images" :key="image.desc">
-            {{ image.desc }}
-        </a>
-        </div>
-
-        <div class="gif-list" v-if="this.parentSite === 'gifulanka'">
-        <a class="items" v-for="gif in gifs" :key="gif.desc">
-            {{ gif.desc }}
-        </a>
-        </div>
+      <div class="mp3-list" v-if="this.parentSite === 'mp3'">
+      <a class="items" v-for="audio in mp3" :key="audio">
+        {{ audio.desc }}
+      </a>
+      </div>
+      <div class="image-list" v-if="this.parentSite === 'kuvalanka'">
+      <a class="items" v-for="image in images" :key="image">
+        {{ image.desc }}
+      </a>
+      </div>
+      <div class="gif-list" v-if="this.parentSite === 'gifulanka'">
+      <a class="items" v-for="gif in gifs" :key="gif">
+        {{ gif.desc }}
+      </a>
+      </div>
     </div>
 </template>
 
@@ -41,35 +44,23 @@ export default {
       images: items.images,
       gifs: items.gif
     }
+  },
+  methods: {
+    loadAll: function (mp4, mp3, img, gif) {
+      let allData = { ...mp4, ...mp3, ...img, ...gif }
+      return allData
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.mp4-list {
-    display: inherit;
+* {
+  margin-top: 0.5rem;
 }
-.mp3-list {
-    display: inherit;
-}
-.image-list {
-    display: inherit;
-}
-.gif-list {
-    display: inherit;
-}
-.list {
-  margin-top: 2.5rem;
-  display: inline-block;
-}
-.items {
-  display: inherit;
-  background-color: black;
-  padding: 5rem 8rem;
-  margin: 5px;
-  width: 2rem;
-  height: 2rem;
+img {
+  max-width: 13rem;
 }
 
 </style>
