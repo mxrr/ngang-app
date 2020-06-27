@@ -1,31 +1,9 @@
 <template>
     <div class="list">
-      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" v-if="this.parentSite === undefined">
-        <div v-masonry-tile class="item" v-for="item in loadAll(mp4, mp3, images, gif)" :key="item">
+      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item">
+        <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item">
           <img :src="item.file">
         </div>
-      </div>
-
-      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" v-if="this.parentSite === 'mp4'">
-        <div v-masonry-tile class="item" v-for="item in mp4" :key="item">
-          <img :src="item.file">
-        </div>
-      </div>
-
-      <div class="mp3-list" v-if="this.parentSite === 'mp3'">
-      <a class="items" v-for="audio in mp3" :key="audio">
-        {{ audio.desc }}
-      </a>
-      </div>
-      <div class="image-list" v-if="this.parentSite === 'kuvalanka'">
-      <a class="items" v-for="image in images" :key="image">
-        {{ image.desc }}
-      </a>
-      </div>
-      <div class="gif-list" v-if="this.parentSite === 'gifulanka'">
-      <a class="items" v-for="gif in gifs" :key="gif">
-        {{ gif.desc }}
-      </a>
       </div>
     </div>
 </template>
@@ -46,9 +24,25 @@ export default {
     }
   },
   methods: {
-    loadAll: function (mp4, mp3, img, gif) {
-      let allData = { ...mp4, ...mp3, ...img, ...gif }
+    loadAll: function () {
+      let allData = { ...this.mp4, ...this.mp3, ...this.images, ...this.gifs }
       return allData
+    },
+    getList: function (key) {
+      switch (key) {
+        case 'mp4':
+          return this.mp4
+        case 'mp3':
+          return this.mp3
+        case 'kuvalanka':
+          return this.images
+        case 'gifulanka':
+          return this.gifs
+        case undefined:
+          return this.loadAll()
+        default:
+          return this.loadAll()
+      }
     }
   }
 }

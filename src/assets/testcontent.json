@@ -44,30 +44,30 @@
     "images":
     {
         "10": {
-            "file": "./asd",
+            "file": "https://cdn.discordapp.com/attachments/704428384297680988/718727175846494218/stressi.png",
             "desc": "nee"
         },
         "11": {
-            "file": "./asd",
+            "file": "https://cdn.discordapp.com/attachments/704428384297680988/704428625188880424/eventhorizon.png",
             "desc": "ke"
         },
         "12": {
-            "file": "../assets/myyra.png",
+            "file": "https://i.imgur.com/wG26FC4.png",
             "desc": "ri"
         }
     },
     "gif":
     {
         "13": {
-            "file": "./asd",
+            "file": "https://cdn.discordapp.com/attachments/704428384297680988/718724377130041344/puutostila.png",
             "desc": "nee"
         },
         "14": {
-            "file": "../assets/myyra.png",
+            "file": "https://cdn.discordapp.com/attachments/704428384297680988/718724653396394016/neekeripena.jpg",
             "desc": "ke"
         },
         "15": {
-            "file": "./asd",
+            "file": "https://cdn.discordapp.com/attachments/704428384297680988/725700407963287592/unknown.png",
             "desc": "ri"
         }
     }
