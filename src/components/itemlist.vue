@@ -18,7 +18,6 @@ export default {
   },
   data: () => {
     return {
-      items: {},
       mp4: {},
       mp3: {},
       images: {},
@@ -27,17 +26,13 @@ export default {
   },
   created () {
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : '/api/'
-    this.items = axios.get(`${url}`
-    ).then(res => {
-      console.log(res.data)
-      this.mp4 = res.data.mp4
-      this.mp3 = res.data.mp3
-      this.images = res.data.images
-      this.gifs = res.data.gif
-      return res.data
-    }).catch(err => {
-      console.log(err)
-    })
+    axios.get(`${url}`)
+      .then(res => {
+        this.mp4 = res.data.mp4
+        this.mp3 = res.data.mp3
+        this.images = res.data.images
+        this.gifs = res.data.gif
+      }).catch(err => console.error(err))
   },
   methods: {
     loadAll: function () {
