@@ -1,9 +1,12 @@
 <template>
     <div class="list">
-      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item">
-        <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item">
+      <div v-masonry="0" v-if="!loading" transition-duration="0.3s" item-selector=".item">
+        <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item.dec">
           <img :src="item.file">
         </div>
+      </div>
+      <div class='loading' v-else>
+          Loading
       </div>
     </div>
 </template>
@@ -18,6 +21,7 @@ export default {
   },
   data: () => {
     return {
+      loading: true,
       mp4: {},
       mp3: {},
       images: {},
@@ -25,6 +29,7 @@ export default {
     }
   },
   created () {
+    this.loading = true
     const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : '/api/'
     axios.get(`${url}`)
       .then(res => {
@@ -32,6 +37,7 @@ export default {
         this.mp3 = res.data.mp3
         this.images = res.data.images
         this.gifs = res.data.gif
+        this.loading = false
       }).catch(err => console.error(err))
   },
   methods: {
