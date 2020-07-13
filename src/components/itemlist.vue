@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import items from '../assets/testcontent.json'
+import axios from 'axios'
+
 export default {
   name: 'itemlist',
   props: {
@@ -17,11 +18,26 @@ export default {
   },
   data: () => {
     return {
-      mp4: items.mp4,
-      mp3: items.mp3,
-      images: items.images,
-      gifs: items.gif
+      items: {},
+      mp4: {},
+      mp3: {},
+      images: {},
+      gifs: {}
     }
+  },
+  created () {
+    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : '/api/'
+    this.items = axios.get(`${url}`
+    ).then(res => {
+      console.log(res.data)
+      this.mp4 = res.data.mp4
+      this.mp3 = res.data.mp3
+      this.images = res.data.images
+      this.gifs = res.data.gif
+      return res.data
+    }).catch(err => {
+      console.log(err)
+    })
   },
   methods: {
     loadAll: function () {
