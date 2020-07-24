@@ -1,8 +1,9 @@
 <template>
     <div class="list">
       <div v-masonry="0" v-if="!loading" transition-duration="0.3s" item-selector=".item">
-        <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item.dec">
-          <img :src="item.file">
+        <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item._id">
+          <span v-html="getFile(item.filename, item.type)"></span>
+          <p>{{item.desc}}</p>
         </div>
       </div>
       <div class='loading' v-else>
@@ -22,43 +23,41 @@ export default {
   data: () => {
     return {
       loading: true,
-      mp4: {},
-      mp3: {},
-      images: {},
-      gifs: {}
+      data: {}
     }
   },
   created () {
     this.loading = true
-    const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api/' : '/api/'
-    axios.get(`${url}`)
-      .then(res => {
-        this.mp4 = res.data.mp4
-        this.mp3 = res.data.mp3
-        this.images = res.data.images
-        this.gifs = res.data.gif
-        this.loading = false
-      }).catch(err => console.error(err))
+
+    this.getContent()
   },
   methods: {
-    loadAll: function () {
-      let allData = { ...this.mp4, ...this.mp3, ...this.images, ...this.gifs }
-      return allData
+    getList (key) {
+      this.getContent(key)
+      return this.data
     },
-    getList: function (key) {
-      switch (key) {
+    getContent (type) {
+      const url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/' : '/api/'
+      axios.get(`${url}content?type=${type !== undefined ? type : ''}`)
+        .then(res => {
+          this.data = res.data
+          this.loading = false
+        }).catch(err => console.error(err))
+    },
+    getFile (filename, type) {
+      const filePath = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/files/' : '/files/'
+
+      switch (type) {
         case 'mp4':
-          return this.mp4
+          return `<video controls>
+                    <source src="${filePath}${filename}" type="video/mp4">
+                  </video>`
         case 'mp3':
-          return this.mp3
-        case 'kuvalanka':
-          return this.images
-        case 'gifulanka':
-          return this.gifs
-        case undefined:
-          return this.loadAll()
+          return `<audio controls>
+                    <source src="${filePath}${filename}" type="audio/mpeg">
+                  </audio>`
         default:
-          return this.loadAll()
+          return `<img src="${filePath}${filename}">`
       }
     }
   }
@@ -66,12 +65,36 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 * {
   margin-top: 0.5rem;
 }
+
+.item {
+  margin: 0.5rem;
+}
+
 img {
   max-width: 13rem;
 }
-
+video {
+  max-width: 13rem;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+audio {
+  max-width: 13rem;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                            supported by Chrome, Edge, Opera and Firefox */
+}
 </style>

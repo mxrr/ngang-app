@@ -1,6 +1,6 @@
 <template>
   <div>
-    <itemlist parentSite="gifulanka"></itemlist>
+    <itemlist parentSite="gif"></itemlist>
   </div>
 </template>
 
@@ -13,3 +13,9 @@ export default {
   }
 }
 </script>
+
+<style>
+img {
+  max-width: 13rem;
+}
+</style>

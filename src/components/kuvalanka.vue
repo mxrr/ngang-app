@@ -1,6 +1,6 @@
 <template>
   <div>
-    <itemlist parentSite="kuvalanka"></itemlist>
+    <itemlist parentSite="img"></itemlist>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   }
 }
 </script>
-<style>
 
+<style>
+img {
+  max-width: 13rem;
+}
 </style>
