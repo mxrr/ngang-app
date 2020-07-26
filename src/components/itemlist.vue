@@ -28,7 +28,6 @@ export default {
   },
   created () {
     this.loading = true
-
     this.getContent()
   },
   methods: {
@@ -71,7 +70,9 @@ export default {
 }
 
 .item {
-  margin: 0.5rem;
+  background: #192424;
+  padding: 5px;
+  margin: 10px;
 }
 
 img {
