@@ -15,6 +15,8 @@
 <script>
 import axios from 'axios'
 
+let firstLoad = true
+
 export default {
   name: 'itemlist',
   props: {
@@ -28,7 +30,7 @@ export default {
   },
   created () {
     this.loading = true
-    this.getContent()
+    firstLoad ? this.getContent() : this.loading = false
   },
   methods: {
     getList (key) {
@@ -39,6 +41,7 @@ export default {
       const url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/' : '/api/'
       axios.get(`${url}content?type=${type !== undefined ? type : ''}`)
         .then(res => {
+          firstLoad = false
           this.data = res.data
           this.loading = false
         }).catch(err => console.error(err))

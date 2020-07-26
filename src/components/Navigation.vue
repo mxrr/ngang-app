@@ -4,16 +4,16 @@
       <h3 slot="header">Login</h3>
       <div id="loginFields" slot="body">
         <hr/>
-        <input type="text" placeholder="Username"/>
+        <input type="text" placeholder="Username" v-model="inputUser"/>
         <br/>
-        <input type="password" placeholder="Password"/>
+        <input type="password" placeholder="Password" v-model="inputPwd"/>
         <hr/>
       </div>
       <div slot="footer">
         <button @click="showLoginModal = false">
           Close
         </button>
-        <button @click="showLoginModal = false; loggedIn = true">
+        <button @click="sendLoginRequest({user: inputUser, pwd: inputPwd})">
           Login
         </button>
       </div>
@@ -22,16 +22,16 @@
       <h3 slot="header">Upload</h3>
       <div id="uploadFields" slot="body">
         <hr/>
-        <input type="text" placeholder="Description"/>
+        <input type="text" placeholder="Description" v-model="inputDesc"/>
         <br/>
-        <input type="file" id="file" ref="file"/>
+        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         <hr/>
       </div>
       <div slot="footer">
         <button @click="showUploadModal = false">
           Close
         </button>
-        <button @click="showUploadModal = false">
+        <button @click="uploadFileRequest">
           Upload
         </button>
       </div>
@@ -43,16 +43,15 @@
       :to="`${routes.page}`">{{routes.text}}</router-link>
       </div>
       <hr/>
-      <div>
-        <a class="userButtons" v-if="!loggedIn" @click="showLoginModal = true">Login</a>
-        <a class="userButtons" v-if="loggedIn" @click="showUploadModal = true">Upload</a>
-        <a class="userButtons" v-if="loggedIn" @click="loggedIn = false">Logout</a>
-      </div>
+      <a class="userButtons" v-if="!loggedIn" @click="handleLogin">Login</a>
+      <a class="userButtons" v-if="loggedIn" @click="showUploadModal = true">Upload</a>
+      <a class="userButtons" v-if="loggedIn" @click="handleLogout">Logout</a>
     </nav>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Modal from './Modal'
 export default {
   name: 'Navigation',
@@ -84,8 +83,78 @@ export default {
         }
       ],
       loggedIn: false,
+      loginErrorText: '',
+      loginError: false,
       showLoginModal: false,
-      showUploadModal: false
+      showUploadModal: false,
+      inputUser: '',
+      inputPwd: '',
+      inputDesc: '',
+      file: ''
+    }
+  },
+  methods: {
+    sendLoginRequest (loginInfo) {
+      const url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/' : '/api/'
+      axios.post(`${url}login`, {
+        user: loginInfo.user,
+        pwd: loginInfo.pwd,
+        token: loginInfo.token
+      })
+        .then(res => {
+          if (res.status === 200) {
+            localStorage.setItem('user', res.data.user)
+            localStorage.setItem('token', res.data.token)
+            this.showLoginModal = false
+            this.loggedIn = true
+          } else {
+            this.loginError = true
+            this.loggedIn = false
+            this.loginErrorText = res.statusText
+            localStorage.setItem('token', '')
+            localStorage.setItem('user', '')
+            this.showLoginModal = true
+          }
+        }).catch(err => console.error(err))
+    },
+    handleLogout () {
+      this.loggedIn = false
+      localStorage.setItem('token', '')
+      localStorage.setItem('user', '')
+    },
+    handleLogin () {
+      if (localStorage.getItem('token') === undefined || localStorage.getItem('token') === '') {
+        this.showLoginModal = true
+      } else {
+        const loginInfo = {
+          user: localStorage.getItem('user'),
+          token: localStorage.getItem('token')
+        }
+        this.sendLoginRequest(loginInfo)
+      }
+    },
+    handleFileUpload () {
+      this.file = this.$refs.file.files[0]
+      console.log(this.$refs.file.files[0])
+      console.log(this.file)
+    },
+    uploadFileRequest () {
+      const url = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api/' : '/api/'
+      const formData = new FormData()
+      formData.append('file', this.file)
+      formData.append('desc', this.inputDesc)
+
+      console.log(formData)
+
+      axios.post(`${url}content`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.error(err))
     }
   }
 }
