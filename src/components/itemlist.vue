@@ -2,8 +2,7 @@
     <div class="list">
       <div v-masonry="0" v-if="!loading" transition-duration="0.3s" item-selector=".item">
         <div v-masonry-tile class="item" v-for="item in getList(parentSite)" :key="item._id">
-          <span v-html="getFile(item.filename, item.type)"></span>
-          <p>{{item.desc}}</p>
+          <mediacontainer :fileName="item.filename" :type="item.type" :desc="item.desc"/>
         </div>
       </div>
       <div class='loading' v-else>
@@ -14,6 +13,7 @@
 
 <script>
 import axios from 'axios'
+import mediacontainer from './mediacontainer'
 
 let firstLoad = true
 
@@ -21,6 +21,9 @@ export default {
   name: 'itemlist',
   props: {
     parentSite: String
+  },
+  components: {
+    'mediacontainer': mediacontainer
   },
   data: () => {
     return {
@@ -76,29 +79,5 @@ export default {
   background: #192424;
   padding: 5px;
   margin: 10px;
-}
-
-img {
-  max-width: 13rem;
-}
-video {
-  max-width: 13rem;
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-}
-audio {
-  max-width: 13rem;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-      -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                            supported by Chrome, Edge, Opera and Firefox */
 }
 </style>
