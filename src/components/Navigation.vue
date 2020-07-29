@@ -123,13 +123,14 @@ export default {
       localStorage.setItem('user', '')
     },
     handleLogin () {
-      if (localStorage.getItem('token') === undefined || localStorage.getItem('token') === '') {
+      if (localStorage.getItem('token') === undefined || localStorage.getItem('token') === '' || localStorage.getItem('token') === null) {
         this.showLoginModal = true
       } else {
         const loginInfo = {
           user: localStorage.getItem('user'),
           token: localStorage.getItem('token')
         }
+        this.showLoginModal = true
         this.sendLoginRequest(loginInfo)
       }
     },

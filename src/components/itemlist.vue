@@ -51,11 +51,11 @@ export default {
 
       switch (type) {
         case 'mp4':
-          return `<video controls>
+          return `<video controls preload="metadata">
                     <source src="${filePath}${filename}" type="video/mp4">
                   </video>`
         case 'mp3':
-          return `<audio controls>
+          return `<audio controls preload="metadata">
                     <source src="${filePath}${filename}" type="audio/mpeg">
                   </audio>`
         default:
